@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-    --clr-main: #4b33a8;
-    --clr-main-light: #785ce9;
+    --clr-main: rgb(247, 94, 5);
+    --clr-main-light: #e9a05c;
     --clr-white: #ececec;
     --clr-gray: #e2e2e2;
     --clr-red: #961818;
@@ -48,7 +48,7 @@ aside {
 
 .logo {
     font-weight: 400;
-    font-size: 1.3rem;
+    font-size: 2rem;
 }
 
 .menu {
