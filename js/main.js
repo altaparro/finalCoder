@@ -82,28 +82,21 @@ if (productosEnCarritoLS) {
     productosEnCarrito = [];
 }
 
+function alertaOk() {
+    Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "El producto se ha agregado con éxito!",
+        showConfirmButton: false,
+        timer: 1500,
+    });
+}
+
+
 function agregarAlCarrito(e) {
 
-    Toastify({
-        text: "Producto agregado",
-        duration: 3000,
-        close: true,
-        gravity: "top", // `top` or `bottom`
-        position: "right", // `left`, `center` or `right`
-        stopOnFocus: true, // Prevents dismissing of toast on hover
-        style: {
-          background: "linear-gradient(to right, #4b33a8, #785ce9)",
-          borderRadius: "2rem",
-          textTransform: "uppercase",
-          fontSize: ".75rem"
-        },
-        offset: {
-            x: '1.5rem', // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-            y: '1.5rem' // vertical axis - can be a number or a string indicating unity. eg: '2em'
-          },
-        onClick: function(){} // Callback after click
-      }).showToast();
-
+    
+    alertaOk();
     const idBoton = e.currentTarget.id;
     const productoAgregado = productos.find(producto => producto.id === idBoton);
 
