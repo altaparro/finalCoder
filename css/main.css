@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-    --clr-main: rgb(247, 94, 5);
+    --clr-main: rgb(255, 116, 36);
     --clr-main-light: #e9a05c;
     --clr-white: #ececec;
     --clr-gray: #e2e2e2;
@@ -151,7 +151,7 @@ main {
 
 .producto-imagen {
     width: 100%;
-    height: 150px;
+    height: 200px;
     border-radius: 1rem;    
 }
 

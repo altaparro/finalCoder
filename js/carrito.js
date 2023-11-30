@@ -95,23 +95,29 @@ function eliminarDelCarrito(e) {
 }
 
 botonVaciar.addEventListener("click", vaciarCarrito);
+
 function vaciarCarrito() {
+    const totalProductos = productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0);
 
     Swal.fire({
         title: '¿Estás seguro?',
+        text: `Se van a borrar ${totalProductos} productos.`,
         icon: 'question',
-        html: `Se van a borrar ${productosEnCarrito.reduce((acc, producto) => acc + producto.cantidad, 0)} productos.`,
         showCancelButton: true,
-        focusConfirm: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
         confirmButtonText: 'Sí',
-        cancelButtonText: 'No'
+        cancelButtonText: 'No',
     }).then((result) => {
         if (result.isConfirmed) {
             productosEnCarrito.length = 0;
             localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
             cargarProductosCarrito();
+            Swal.fire('Carrito vaciado exitosamente.', '', 'success');
+        } else {
+            Swal.fire('Operación cancelada.', '', 'info');
         }
-      })
+    });
 }
 
 
