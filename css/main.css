@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-    --clr-main: rgb(255, 116, 36);
-    --clr-main-light: #e9a05c;
-    --clr-white: #ececec;
-    --clr-gray: #e2e2e2;
-    --clr-red: #961818;
+   --blanco: #ececec;
+    --gris: #e2e2e2;
+    --rojo: #961818;
+    --naranja: rgb(255, 116, 36);
+    --naranja-light: #eea968;
 }
 
 * {
@@ -31,13 +31,13 @@ a {
 .wrapper {
     display: grid;
     grid-template-columns: 1fr 4fr;
-    background-color: var(--clr-main);
+    background-color: var(--naranja);
 }
 
 aside {
     padding: 2rem;
     padding-right: 0;
-    color: var(--clr-white);
+    color: var(--blanco);
     position: sticky;
     top: 0;
     height: 100vh;
@@ -49,6 +49,7 @@ aside {
 .logo {
     font-weight: 400;
     font-size: 2rem;
+    color: var(--blanco);
 }
 
 .menu {
@@ -60,7 +61,7 @@ aside {
 .boton-menu {
     background-color: transparent;
     border: 0;
-    color: var(--clr-white);
+    color: var(--blanco);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -72,8 +73,8 @@ aside {
 }
 
 .boton-menu.active {
-    background-color: var(--clr-white);
-    color: var(--clr-main);
+    background-color: var(--blanco);
+    color: var(--naranja);
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
     position: relative;
@@ -88,7 +89,7 @@ aside {
     right: 0;
     background-color: transparent;
     border-bottom-right-radius: .5rem;
-    box-shadow: 0 1rem 0 var(--clr-white);
+    box-shadow: 0 1rem 0 var(--blanco);
 }
 
 .boton-menu.active::after {
@@ -100,7 +101,7 @@ aside {
     right: 0;
     background-color: transparent;
     border-top-right-radius: .5rem;
-    box-shadow: 0 -1rem 0 var(--clr-white);
+    box-shadow: 0 -1rem 0 var(--blanco);
 }
 
 .boton-menu > i.bi-hand-index-thumb-fill,
@@ -113,24 +114,24 @@ aside {
 }
 
 .numerito {
-    background-color: var(--clr-white);
-    color: var(--clr-main);
+    background-color: var(--blanco);
+    color: var(--naranja);
     padding: .15rem .25rem;
     border-radius: .25rem;
 }
 
 .boton-carrito.active .numerito {
-    background-color: var(--clr-main);
-    color: var(--clr-white);
+    background-color: var(--naranja);
+    color: var(--blanco);
 }
 
 .texto-footer {
-    color: var(--clr-main-light);
+    color: var(--naranja-light);
     font-size: .85rem;
 }
 
 main {
-    background-color: var(--clr-white);
+    background-color: var(--blanco);
     margin: 1rem;
     margin-left: 0;
     border-radius: 2rem;
@@ -138,7 +139,7 @@ main {
 }
 
 .titulo-principal {
-    color: var(--clr-main);
+    color: var(--naranja);
     margin-bottom: 2rem;
 }
 
@@ -156,8 +157,8 @@ main {
 }
 
 .producto-detalles {
-    background-color: var(--clr-main);
-    color: var(--clr-white);
+    background-color: var(--naranja);
+    color: var(--blanco);
     padding: .5rem;
     border-radius: 1rem;
     position: relative;
@@ -173,20 +174,20 @@ main {
 
 .producto-agregar {
     border: 0;
-    background-color: var(--clr-white);
-    color: var(--clr-main);
+    background-color: var(--blanco);
+    color: var(--naranja);
     padding: .4rem;
     text-transform: uppercase;
     border-radius: 2rem;
     cursor: pointer;
-    border: 2px solid var(--clr-white);
+    border: 2px solid var(--blanco);
     transition: background-color .2s, color .2s;
     margin-top: auto;
 }
 
     .producto-agregar:hover {
-    background-color: var(--clr-main);
-    color: var(--clr-white);
+    background-color: var(--naranja);
+    color: var(--blanco);
 }
 
 
@@ -200,7 +201,7 @@ main {
 
 .carrito-vacio,
 .carrito-comprado {
-    color: var(--clr-main);
+    color: var(--naranja);
 }
 
 .carrito-productos {
@@ -213,8 +214,8 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--clr-gray);
-    color: var(--clr-main);
+    background-color: var(--gris);
+    color: var(--naranja);
     padding: .5rem;
     padding-right: 1.5rem;
     border-radius: 1rem;
@@ -232,7 +233,7 @@ main {
 .carrito-producto-eliminar {
     border: 0;
     background-color: transparent;
-    color: var(--clr-red);
+    color: var(--rojo);
     cursor: pointer;
 }
 
@@ -243,10 +244,10 @@ main {
 
 .carrito-acciones-vaciar {
     border: 0;
-    background-color: var(--clr-gray);
+    background-color: var(--gris);
     padding: 1rem;
     border-radius: 1rem;
-    color: var(--clr-main);
+    color: var(--naranja);
     text-transform: uppercase;
     cursor: pointer;
 }
@@ -257,9 +258,9 @@ main {
 
 .carrito-acciones-total {
     display: flex;
-    background-color: var(--clr-gray);
+    background-color: var(--gris);
     padding: 1rem;
-    color: var(--clr-main);
+    color: var(--naranja);
     text-transform: uppercase;
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
@@ -268,9 +269,9 @@ main {
 
 .carrito-acciones-comprar {
     border: 0;
-    background-color: var(--clr-main);
+    background-color: var(--naranja);
     padding: 1rem;
-    color: var(--clr-white);
+    color: var(--blanco);
     text-transform: uppercase;
     cursor: pointer;
     border-top-right-radius: 1rem;
@@ -314,7 +315,7 @@ main {
     aside {
         position: fixed;
         z-index: 9;
-        background-color: var(--clr-main);
+        background-color: var(--naranja);
         left: 0;
         box-shadow: 0 0 0 100vmax rgba(0, 0, 0, .75);
         transform: translateX(-100%);
@@ -352,12 +353,12 @@ main {
     }
 
     .header-mobile .logo {
-        color: var(--clr-gray);
+        color: var(--gris);
     }
 
     .open-menu, .close-menu {
         background-color: transparent;
-        color: var(--clr-gray);
+        color: var(--gris);
         border: 0;
         font-size: 2rem;
         cursor: pointer;

@@ -1,66 +1,82 @@
-let productos = [];
+let productos = []; 
 
-fetch("./js/productos.json")
-    .then(response => response.json())
-    .then(data => {
-        productos = data;
-        cargarProductos(productos);
+fetch("http://localhost:6607/api/v1/products/obtenerTodosLosProductos")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error al obtener productos: ${response.statusText}`);
+        }
+        return response.json();
     })
-
+    .then(data => {
+        cargarProductos(data);
+        botonesAgregar = document.querySelectorAll(".producto-agregar");
+        actualizarBotonesAgregar();
+        botonesAgregar.forEach(boton => {
+            boton.addEventListener("click", agregarAlCarrito);
+        });
+    })
+    .catch(error => console.error(error.message));
 
 const contenedorProductos = document.querySelector("#contenedor-productos");
 const botonesCategorias = document.querySelectorAll(".boton-categoria");
 const tituloPrincipal = document.querySelector("#titulo-principal");
-let botonesAgregar = document.querySelectorAll(".producto-agregar");
 const numerito = document.querySelector("#numerito");
-
 
 botonesCategorias.forEach(boton => boton.addEventListener("click", () => {
     aside.classList.remove("aside-visible");
 }))
 
+const WEBURL="http://localhost:5500/";
 
-function cargarProductos(productosElegidos) {
+async function cargarProductos(responseData) {
+    try {
+        if (!responseData || !Array.isArray(responseData.body)) {
+            console.error('La respuesta no tiene la estructura esperada:', responseData);
+            return;
+        }
 
-    contenedorProductos.innerHTML = "";
+        productos = responseData.body; // Actualiza la variable 'productos'
 
-    productosElegidos.forEach(producto => {
+        contenedorProductos.innerHTML = "";
 
-        const div = document.createElement("div");
-        div.classList.add("producto");
-        div.innerHTML = `
-            <img class="producto-imagen" src="${producto.imagen}" alt="${producto.titulo}">
-            <div class="producto-detalles">
-                <h3 class="producto-titulo">${producto.titulo}</h3>
-                <p class="producto-precio">$${producto.precio}</p>
-                <button class="producto-agregar" id="${producto.id}">Agregar</button>
-            </div>
-        `;
+        for (const producto of productos) {
+            const div = document.createElement("div");
+            div.classList.add("producto");
+            div.innerHTML = `
+                <img class="producto-imagen" src="${WEBURL}${producto.imagen}" alt="${producto.product_name}">
+                <div class="producto-detalles">
+                    <h3 class="producto-titulo">${producto.product_name}</h3>
+                    <p class="producto-precio">$${producto.price}</p>
+                    <button class="producto-agregar" id="${producto.product_id}">Agregar</button>
+                </div>  
+            `;
 
-        contenedorProductos.append(div);
-    })
+            div.dataset.tipo = producto.tipo; // Agrega la propiedad 'tipo' al producto
 
-    actualizarBotonesAgregar();
+            contenedorProductos.append(div);
+        }
+
+        actualizarBotonesAgregar();
+    } catch (error) {
+        console.error('Error al cargar productos:', error);
+    }
 }
 
 
 botonesCategorias.forEach(boton => {
     boton.addEventListener("click", (e) => {
-
         botonesCategorias.forEach(boton => boton.classList.remove("active"));
         e.currentTarget.classList.add("active");
 
-        if (e.currentTarget.id != "todos") {
-            const productoCategoria = productos.find(producto => producto.categoria.id === e.currentTarget.id);
-            tituloPrincipal.innerText = productoCategoria.categoria.nombre;
-            const productosBoton = productos.filter(producto => producto.categoria.id === e.currentTarget.id);
+        if (e.currentTarget.id !== "todos") {
+            const tipoCategoria = e.currentTarget.id;
+            const productosBoton = Array.from(contenedorProductos.children).filter(producto => producto.dataset.tipo === tipoCategoria);
             cargarProductos(productosBoton);
         } else {
             tituloPrincipal.innerText = "Todos los productos";
             cargarProductos(productos);
         }
-
-    })
+    });
 });
 
 function actualizarBotonesAgregar() {
@@ -92,20 +108,27 @@ function alertaOk() {
     });
 }
 
-
 function agregarAlCarrito(e) {
+    const idBoton = parseInt(e.currentTarget.id, 10);
+    console.log('ID del botón:', idBoton);
 
-    
-    alertaOk();
-    const idBoton = e.currentTarget.id;
-    const productoAgregado = productos.find(producto => producto.id === idBoton);
+    console.log('Datos de productos:', productos);
 
-    if(productosEnCarrito.some(producto => producto.id === idBoton)) {
-        const index = productosEnCarrito.findIndex(producto => producto.id === idBoton);
+    const productoAgregado = productos.find(producto => producto.product_id === idBoton);
+    console.log('Producto encontrado:', productoAgregado);
+
+    if (!productoAgregado) {
+        console.error('Producto no encontrado:', idBoton);
+        return;
+    }
+
+    if(productosEnCarrito.some(producto => producto.product_id === idBoton)) {
+        const index = productosEnCarrito.findIndex(producto => producto.product_id === idBoton);
         productosEnCarrito[index].cantidad++;
     } else {
         productoAgregado.cantidad = 1;
         productosEnCarrito.push(productoAgregado);
+        alertaOk();
     }
 
     actualizarNumerito();
