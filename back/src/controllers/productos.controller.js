@@ -79,6 +79,39 @@ async function obtenerProductoPorID(req, res) {
   }
 }
 
+async function obtenerProductoPorTipo(req, res) {
+  try {
+    const tipo = req.params.tipo;
+    const producto = await Products.findOne({
+      where: {
+        tipo: tipo,
+      },
+    });
+
+    if (!producto) {
+      return res.status(404).json({
+        ok: false,
+        status: 404,
+        message: "Producto no encontrado",
+      });
+    }
+
+    res.status(200).json({
+      ok: true,
+      status: 200,
+      body: producto,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      ok: false,
+      status: 500,
+      message: "Error al obtener el producto",
+    });
+  }
+}
+
+
 async function actualizarProducto(req, res) {
   try {
     const id = req.params.product_id;
@@ -213,4 +246,5 @@ module.exports = {
   obtenerProductoPorID,
   actualizarProducto,
   eliminarProducto,
+  obtenerProductoPorTipo
 };

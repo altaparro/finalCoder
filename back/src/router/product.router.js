@@ -7,12 +7,13 @@ const { validacionesProductos } = require('../validaciones/productosValidaciones
 
 const permisoCrear = "crearProducto"; // aca defino una constante con el nombre del controlador de la ruta, y la envio a permisos.js por parametro
 const permisoActualizar = "actualizarProducto";
-const permisoObtenerTodos = "obtenerTodosLosProductos";
 const permisoObtenerPorID = "obtenerProductoPorID";
 const permisoEliminar = "eliminarProducto";
 
 
 productoRouter.get("/products/obtenerTodosLosProductos", productosController.obtenerTodosLosProductos);
+
+productoRouter.get("/products/obtenerProductoPorTipo", productosController.obtenerProductoPorTipo);
 
 productoRouter.get("/products/obtenerProductoPorID", verificarToken, permisos.obtenerPermisos(permisoObtenerPorID), productosController.obtenerProductoPorID);
 

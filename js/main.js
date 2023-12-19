@@ -70,8 +70,9 @@ botonesCategorias.forEach(boton => {
 
         if (e.currentTarget.id !== "todos") {
             const tipoCategoria = e.currentTarget.id;
-            const productosBoton = Array.from(contenedorProductos.children).filter(producto => producto.dataset.tipo === tipoCategoria);
-            cargarProductos(productosBoton);
+            const productosPorTipo = productos.filter(producto => producto.tipo === tipoCategoria);
+            tituloPrincipal.innerText = `Productos - ${tipoCategoria.charAt(0).toUpperCase() + tipoCategoria.slice(1)}`;
+            cargarProductos(productosPorTipo);
         } else {
             tituloPrincipal.innerText = "Todos los productos";
             cargarProductos(productos);
