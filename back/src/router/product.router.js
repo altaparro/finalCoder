@@ -13,7 +13,7 @@ const permisoEliminar = "eliminarProducto";
 
 productoRouter.get("/products/obtenerTodosLosProductos", productosController.obtenerTodosLosProductos);
 
-productoRouter.get("/products/obtenerProductoPorTipo", productosController.obtenerProductoPorTipo);
+productoRouter.get("/products/obtenerProductoPorTipo/:tipoCategoria", productosController.obtenerProductoPorTipo);
 
 productoRouter.get("/products/obtenerProductoPorID", verificarToken, permisos.obtenerPermisos(permisoObtenerPorID), productosController.obtenerProductoPorID);
 

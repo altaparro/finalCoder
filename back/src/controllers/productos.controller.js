@@ -81,8 +81,8 @@ async function obtenerProductoPorID(req, res) {
 
 async function obtenerProductoPorTipo(req, res) {
   try {
-    const tipo = req.params.tipo;
-    const producto = await Products.findOne({
+    const tipo = req.params.tipoCategoria;
+    const producto = await Products.findAll({
       where: {
         tipo: tipo,
       },
