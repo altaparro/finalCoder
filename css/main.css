@@ -4,8 +4,8 @@
    --blanco: #ececec;
     --gris: #e2e2e2;
     --rojo: #961818;
-    --naranja: rgb(255, 116, 36);
-    --naranja-light: #eea968;
+    --naranja: rgba(255, 94, 0, 0.836);
+    --naranja-light: #ffa047;
 }
 
 * {
