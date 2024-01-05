@@ -390,6 +390,7 @@ async function actualizarPass(req, res) {
   }
 }
 
+
 module.exports = {
   crearUsuario,
   obtenerUsuarioPorID,

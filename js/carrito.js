@@ -1,3 +1,7 @@
+const mp = new MercadoPago("TEST-bb4d090e-1927-45c5-9197-acee536e58c9", {
+    locale: "es-AR",
+});
+
 let productosEnCarrito = localStorage.getItem("productos-en-carrito");
 productosEnCarrito = JSON.parse(productosEnCarrito);
 
@@ -127,14 +131,46 @@ function actualizarTotal() {
 }
 
 botonComprar.addEventListener("click", comprarCarrito);
-function comprarCarrito() {
+async function comprarCarrito() {
 
-    productosEnCarrito.length = 0;
-    localStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+    try{
+        const orderData = localStorage.getItem("productos-en-carrito") ;
+        const orderDataFinal = JSON.parse(orderData).map(producto => {
+            return {
+                product_id: producto.product_id,
+                cantidad: producto.cantidad
+            }
+        }) 
+        console.log(orderDataFinal);
+       
+         const response = await fetch("http://localhost:6607/api/v1/create_preference", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ orders: orderDataFinal }),
+         });
     
-    contenedorCarritoVacio.classList.add("disabled");
-    contenedorCarritoProductos.classList.add("disabled");
-    contenedorCarritoAcciones.classList.add("disabled");
-    contenedorCarritoComprado.classList.remove("disabled");
+         const preference = await response.json()
+         createCheckoutButton(preference.id);
+    }catch(error){
+        alert("error", error)
+    } 
+    };
 
-}
+    const createCheckoutButton = (preferenceId) => {
+        const bricksBuilder = mp.bricks();
+
+        const renderComponent = async () =>{
+            if (window.checkoutButton) window.checkoutButton.unmount();
+
+            await bricksBuilder.create("wallet", "wallet_container", {
+                initialization: {
+                    preferenceId: preferenceId,
+                },
+             });
+        }
+
+        renderComponent()
+    }
+    
