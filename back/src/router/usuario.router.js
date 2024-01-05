@@ -144,9 +144,19 @@ usuarioRouter.post("/create_preference", async (req, res) => {
     .create({
       body: {
         items: carritoFinal,
+        back_urls: {
+          success: "http://localhost:8080/feedback",
+          failure: "http://localhost:8080/feedback",
+          pending: "http://localhost:8080/feedback",
+        },
+        auto_return: "approved",
       },
     })
-    .then(console.log)
+    .then((data) => {
+      res.json({
+        message: data,
+      });
+    })
     .catch(console.log);
 });
 
