@@ -1,5 +1,30 @@
 let productos = [];
 
+// reseteamos el localstorage en caso de que el pago haya sido exitoso
+
+// Función para obtener el valor de un parámetro de la URL
+function getQueryParam(param) {
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  return urlParams.get(param);
+}
+
+// Función para resetear el localStorage si es necesario
+function resetearLocalStorageSiEsNecesario() {
+  const clearParam = getQueryParam('clear');
+
+  if (clearParam === 'true') {
+    localStorage.clear();
+    console.log('LocalStorage reseteado debido al parámetro clear=true');
+  }
+}
+
+// Llamamos a la función para resetear el localStorage
+resetearLocalStorageSiEsNecesario();
+
+
+
+
 fetch("http://localhost:6607/api/v1/products/obtenerTodosLosProductos")
   .then((response) => {
     if (!response.ok) {

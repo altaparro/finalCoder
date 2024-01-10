@@ -1,4 +1,4 @@
-const mp = new MercadoPago("TEST-bb4d090e-1927-45c5-9197-acee536e58c9", {
+const mp = new MercadoPago("TEST-1aedb731-9639-4152-b63d-f9d3ef14391c", {
   locale: "es-AR",
 });
 
@@ -143,6 +143,9 @@ function actualizarTotal() {
 
 botonComprar.addEventListener("click", comprarCarrito);
 async function comprarCarrito() {
+  const btnComprar =  document.getElementById("carrito-acciones-comprar")
+  btnComprar.disabled = true;
+  btnComprar.style = "background-color: grey"
   try {
     const orderData = localStorage.getItem("productos-en-carrito");
     const orderDataFinal = JSON.parse(orderData).map((producto) => {
@@ -175,7 +178,10 @@ const createCheckoutButton = (preferenceId) => {
   const bricksBuilder = mp.bricks();
 
   const renderComponent = async () => {
-    if (window.checkoutButton) window.checkoutButton.unmount();
+    if (window.checkoutButton){
+      console.log("entroooo");
+      window.checkoutButton.unmount();
+    } 
 
     await bricksBuilder.create("wallet", "wallet_container", {
       initialization: {
