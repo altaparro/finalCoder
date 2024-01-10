@@ -88,7 +88,7 @@ usuarioRouter.post("/create_preference", async (req, res) => {
   console.log(req.body.orders);
   const client = new MercadoPagoConfig({
     accessToken:
-      "TEST-1892584753784255-122708-cc2488255b0fd11c8d3d44d1f07c8628-268082262",
+      "TEST-2502925548518627-010909-c18c4079893f6f5d1cfe9ca8850f125c-1623447233",
     options: { timeout: 5000, idempotencyKey: "abc" },
   });
 
@@ -145,8 +145,8 @@ usuarioRouter.post("/create_preference", async (req, res) => {
       body: {
         items: carritoFinal,
         back_urls: {
-          success: "http://localhost:8080/feedback",
-          failure: "http://localhost:8080/feedback",
+          success: "http://localhost:5500/index.html?clear=true",
+          failure: "http://localhost:8080/carrito.html?",
           pending: "http://localhost:8080/feedback",
         },
         auto_return: "approved",
