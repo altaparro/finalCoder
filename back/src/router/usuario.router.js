@@ -92,7 +92,6 @@ usuarioRouter.post("/create_preference", async (req, res) => {
     options: { timeout: 5000, idempotencyKey: "abc" },
   });
 
-  // Step 3: Initialize the API object
   const preferences = new Preferences(client);
 
   const productIdsArray = req.body.orders.map(
@@ -118,36 +117,14 @@ usuarioRouter.post("/create_preference", async (req, res) => {
 
   console.log(carritoFinal);
 
-  let preference = {
-    items: carritoFinal,
-    back_urls: {
-      success: "http://localhost:8080/feedback",
-      failure: "http://localhost:8080/feedback",
-      pending: "http://localhost:8080/feedback",
-    },
-    auto_return: "approved",
-  };
-
-  //   preferences
-  //     .create({body: preference})
-  //     .then(function (response) {
-  //       res.json({
-  //         id: response.body.id,
-  //       });
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //       res.status(500).json({ error: 'Error al crear preferencia' });
-  //     });
-
   preferences
     .create({
       body: {
         items: carritoFinal,
         back_urls: {
           success: "http://localhost:5500/index.html?clear=true",
-          failure: "http://localhost:8080/carrito.html?",
-          pending: "http://localhost:8080/feedback",
+          failure: "http://localhost:5500/carrito.html",
+          pending: "http://localhost:5500/carrito.html",
         },
         auto_return: "approved",
       },

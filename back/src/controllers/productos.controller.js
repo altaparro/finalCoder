@@ -1,10 +1,17 @@
 const Products = require("../model/product.model");
 const xl = require("excel4node");
 const path = require('path');
+const { Op } = require("sequelize");
 
 async function obtenerTodosLosProductos(req, res) {
   try {
-    const products = await Products.findAll();
+    const products = await Products.findAll({
+      where: {
+        cantidad: {
+          [Op.gt]: 0 // 'gt' significa 'greater than' (mayor que)
+        }
+      }
+    });
     res.status(200).json({
       ok: true,
       status: 200,

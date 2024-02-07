@@ -179,7 +179,6 @@ const createCheckoutButton = (preferenceId) => {
 
   const renderComponent = async () => {
     if (window.checkoutButton){
-      console.log("entroooo");
       window.checkoutButton.unmount();
     } 
 
