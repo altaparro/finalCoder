@@ -55,14 +55,18 @@ async function crearProducto(req, res) {
 }
 
 async function obtenerProductoPorID(req, res) {
+  const id = req.params.product_id;
+  console.log(id);
   try {
+    
     const id = req.params.product_id;
+    console.log(id);
     const producto = await Products.findOne({
       where: {
         product_id: id,
       },
     });
-
+    
     if (!producto) {
       return res.status(404).json({
         ok: false,

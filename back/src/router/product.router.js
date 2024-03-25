@@ -15,7 +15,7 @@ productoRouter.get("/products/obtenerTodosLosProductos", productosController.obt
 
 productoRouter.get("/products/obtenerProductoPorTipo/:tipoCategoria", productosController.obtenerProductoPorTipo);
 
-productoRouter.get("/products/obtenerProductoPorID", verificarToken, permisos.obtenerPermisos(permisoObtenerPorID), productosController.obtenerProductoPorID);
+productoRouter.get("/products/obtenerProductoPorID/:product_id", verificarToken, permisos.obtenerPermisos(permisoObtenerPorID), productosController.obtenerProductoPorID);
 
 productoRouter.post("/products/crearProducto", verificarToken, permisos.obtenerPermisos(permisoCrear), validacionesProductos, productosController.crearProducto);
  
