@@ -38,6 +38,7 @@ async function crearProducto(req, res) {
       cantidad: dataProducts.cantidad,
       tipo: dataProducts.tipo,
       proveedor: dataProducts.proveedor,
+      imagen: `img\ ${dataProducts.imagen.name}`
     });
     res.status(201).json({
       ok: true,
@@ -169,7 +170,7 @@ async function actualizarProducto(req, res) {
 
 async function eliminarProducto(req, res) {
   try {
-    const id = req.params.product_id_id;
+    const id = req.params.product_id;
 
     const deleteCount = await Products.destroy({
       where: {

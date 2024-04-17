@@ -17,11 +17,13 @@ productoRouter.get("/products/obtenerProductoPorTipo/:tipoCategoria", productosC
 
 productoRouter.get("/products/obtenerProductoPorID/:product_id", verificarToken, permisos.obtenerPermisos(permisoObtenerPorID), productosController.obtenerProductoPorID);
 
-productoRouter.post("/products/crearProducto", verificarToken, permisos.obtenerPermisos(permisoCrear), validacionesProductos, productosController.crearProducto);
+productoRouter.post("/products/crearProducto", validacionesProductos, productosController.crearProducto);
+
+// productoRouter.post("/products/crearProducto", verificarToken, permisos.obtenerPermisos(permisoCrear), validacionesProductos, productosController.crearProducto);
  
 productoRouter.put("/products/actualizarProducto", verificarToken, permisos.obtenerPermisos(permisoActualizar), productosController.actualizarProducto);
 
-productoRouter.delete("/products/eliminarProducto", verificarToken, permisos.obtenerPermisos(permisoEliminar), productosController.eliminarProducto)
+productoRouter.delete("/products/eliminarProducto/:product_id", productosController.eliminarProducto)
 
 
 module.exports = productoRouter;
