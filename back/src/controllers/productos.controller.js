@@ -38,7 +38,7 @@ async function crearProducto(req, res) {
       cantidad: dataProducts.cantidad,
       tipo: dataProducts.tipo,
       proveedor: dataProducts.proveedor,
-      imagen: `img\ ${dataProducts.imagen.name}`
+      imagen: `img\\${dataProducts.imagen}`
     });
     res.status(201).json({
       ok: true,
@@ -129,21 +129,25 @@ async function actualizarProducto(req, res) {
     const id = req.params.product_id;
     const dataProducts = req.body;
 
-    const [updateCount] = await Products.update(
-      {
-        product_name: dataProducts.product_name,
-        price: dataProducts.price,
-        is_stock: dataProducts.is_stock,
-        cantidad: dataProducts.cantidad,
-        tipo: dataProducts.tipo,
-        proveedor: dataProducts.proveedor,
+    const updateFields = {
+      product_name: dataProducts.product_name,
+      price: dataProducts.price,
+      is_stock: dataProducts.is_stock,
+      cantidad: dataProducts.cantidad,
+      tipo: dataProducts.tipo,
+      proveedor: dataProducts.proveedor,
+    };
+
+    // Verifica si req.body.imagen no está vacío, si no lo está, agrega imagen al objeto de actualización
+    if (dataProducts.imagen !== '') {
+      updateFields.imagen = dataProducts.imagen;
+    }
+
+    const [updateCount] = await Products.update(updateFields, {
+      where: {
+        product_id: id,
       },
-      {
-        where: {
-          product_id: id,
-        },
-      }
-    );
+    });
 
     if (updateCount === 0) {
       return res.status(404).json({
@@ -167,6 +171,7 @@ async function actualizarProducto(req, res) {
     });
   }
 }
+
 
 async function eliminarProducto(req, res) {
   try {

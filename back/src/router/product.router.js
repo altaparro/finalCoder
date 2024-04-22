@@ -20,8 +20,8 @@ productoRouter.get("/products/obtenerProductoPorID/:product_id", verificarToken,
 productoRouter.post("/products/crearProducto", validacionesProductos, productosController.crearProducto);
 
 // productoRouter.post("/products/crearProducto", verificarToken, permisos.obtenerPermisos(permisoCrear), validacionesProductos, productosController.crearProducto);
- 
-productoRouter.put("/products/actualizarProducto", verificarToken, permisos.obtenerPermisos(permisoActualizar), productosController.actualizarProducto);
+
+productoRouter.put("/products/actualizarProducto/:product_id", productosController.actualizarProducto);
 
 productoRouter.delete("/products/eliminarProducto/:product_id", productosController.eliminarProducto)
 

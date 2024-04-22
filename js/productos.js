@@ -1,7 +1,9 @@
 const url = 'http://localhost:6607/api/v1/products/obtenerTodosLosProductos'
 const urlDelete = 'http://localhost:6607/api/v1/products/eliminarProducto/'
 const urlCrear = 'http://localhost:6607/api/v1/products/crearProducto'
+const urlEditar = 'http://localhost:6607/api/v1/products/actualizarProducto/'
 const contenedor = document.querySelector('tbody')
+
 let resultados = ''
 
 const modalArticulo = new bootstrap.Modal(document.getElementById('modalArticulo'))
@@ -14,15 +16,15 @@ const proveedor = document.getElementById('proveedor')
 const imagen = document.getElementById('imagen')
 let opcion = ''
 
-btnCrear.addEventListener('click', ()=>{
+btnCrear.addEventListener('click', () => {
     limpiarCampos()
     modalArticulo.show()
     opcion = 'crear'
 })
 
 
-function limpiarCampos(){
-    nombre.value= ''
+function limpiarCampos() {
+    nombre.value = ''
     precio.value = ''
     cantidad.value = ''
     tipo.value = ''
@@ -42,7 +44,7 @@ const mostrar = (articulos) => {
                             <td>${articulo.imagen}</td>
                             <td class="text-center"><a class="btnEditar btn btn-primary">Editar</a>  <a class="btnBorrar btn btn-danger">Borrar</a></td>
                         </tr>
-                      `    
+                      `
     })
     contenedor.innerHTML = resultados
 }
@@ -57,7 +59,7 @@ fetch(url)
 
 const on = (element, event, selector, handler) => {
     element.addEventListener(event, e => {
-        if(e.target.closest(selector)){
+        if (e.target.closest(selector)) {
             handler(e)
         }
     })
@@ -68,16 +70,16 @@ on(document, 'click', '.btnBorrar', e => {
     const fila = e.target.parentNode.parentNode
     const id = fila.firstElementChild.innerHTML
     alertify.confirm("¿Esta seguro que desea eliminar el producto?",
-    function(){
-      fetch(urlDelete+id,{
-        method: 'DELETE'
-      })
-      .then( res => res.json())
-      .then( ()=> location.reload())
-    },
-    function(){
-      alertify.error('Cancel');
-    });
+        function () {
+            fetch(urlDelete + id, {
+                method: 'DELETE'
+            })
+                .then(response => response.json())
+                .then(() => location.reload())
+        },
+        function () {
+            alertify.error('Cancel');
+        });
 })
 
 //proceso para editar
@@ -92,37 +94,64 @@ on(document, 'click', '.btnEditar', e => {
     const proveedorForm = fila.children[5].innerHTML
     const imagenForm = fila.children[6].innerHTML
 
-    nombre.value=nombreForm
-    precio.value=precioForm
-    cantidad.value=cantidadForm
-    tipo.value=tipoForm
-    proveedor.value=proveedorForm
-    imagen.value=imagenForm
-    opcion= 'editar'
+    nombre.value = nombreForm
+    precio.value = precioForm
+    cantidad.value = cantidadForm
+    tipo.value = tipoForm
+    proveedor.value = proveedorForm
+    // imagen.value=imagenruta
+    opcion = 'editar'
     modalArticulo.show()
-    
+
 })
 
-
-formArticulo.addEventListener('submit', (e)=>{
+//proceso para crear y editar
+formArticulo.addEventListener('submit', (e) => {
     e.preventDefault();
-    if(opcion=='crear'){
+    if (opcion == 'crear') {
+        let imagenruta = '';
+        if (imagen.files.length > 0) {
+            imagenruta = imagen.files[0].name;
+        }
         fetch(urlCrear, {
-            method:'POST',
-            headers: {'Content-Type': 'application/json'},
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                product_name:nombre.value,
-                price:precio.value,
-                cantidad:cantidad.value,
-                tipo:tipo.value,
-                proveedor:proveedor.value,
-                imagen:imagen.value
+                product_name: nombre.value,
+                price: precio.value,
+                cantidad: cantidad.value,
+                tipo: tipo.value,
+                proveedor: proveedor.value,
+                imagen: imagenruta
             })
         })
-        console.log(imagen);
+            .then(response => response.json())
+            .then(data => {
+                const nuevoArticulo = []
+                nuevoArticulo.push(data)
+                mostrar(nuevoArticulo)
+            })
     }
-    if(opcion=='editar'){
-
+    if (opcion == 'editar') {
+        let imagenruta = imagen.value; // Conserva el valor existente por defecto
+        if (imagen.files.length > 0) {
+            imagenruta = imagen.files[0].name;
+        }
+        fetch(urlEditar + idForm, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                product_name: nombre.value,
+                price: precio.value,
+                cantidad: cantidad.value,
+                tipo: tipo.value,
+                proveedor: proveedor.value,
+                imagen: imagenruta
+            })
+        })
+            .then(response => response.json())
+            .then(response => location.reload())
     }
     modalArticulo.hide()
 })
+
