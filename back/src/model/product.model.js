@@ -12,6 +12,10 @@ Product.init(
       autoIncrement: true,
       primaryKey: true,
     },
+    codigo: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     product_name: {
       type: DataTypes.STRING,
       allowNull: false, // no puede ser nulo
