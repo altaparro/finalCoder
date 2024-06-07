@@ -32,6 +32,7 @@ async function crearProducto(req, res) {
     const dataProducts = req.body;
     await Products.sync();
     const createProduct = await Products.create({
+      codigo: dataProducts.codigo,
       product_name: dataProducts.product_name,
       price: dataProducts.price,
       is_stock: dataProducts.is_stock,
@@ -50,7 +51,7 @@ async function crearProducto(req, res) {
     res.status(500).json({
       ok: false,
       status: 500,
-      message: "Error al crear el producto",
+      message: "Error al crear el producto" ,
     });
   }
 }
@@ -123,7 +124,6 @@ async function obtenerProductoPorTipo(req, res) {
   }
 }
 
-
 async function actualizarProducto(req, res) {
   try {
     const id = req.params.product_id;
@@ -172,7 +172,6 @@ async function actualizarProducto(req, res) {
   }
 }
 
-
 async function eliminarProducto(req, res) {
   try {
     const id = req.params.product_id;
@@ -213,49 +212,6 @@ let fechaMes = date.getUTCMonth() + 1;
 let fechaAnio = date.getUTCFullYear();
 let fechaHora = date.getUTCHours();
 let fechaMinuto = date.getUTCMinutes();
-
-async function descargarExcel(req, res) {
-  //configurando
-  var wb = new xl.Workbook(); //creando el libro de trabajo
-  let nombreArchivo =
-    "todosLosProductos" + fechaDia + "_" + fechaMes + "_" + fechaAnio + ".";
-  var ws = wb.addWorksheet(nombreArchivo);
-
-  //crear estilos
-  var style1 = wb.createStyle({
-    font: {
-      name: "Arial",
-      color: "#000000",
-      size: 12,
-      bold: true,
-    },
-  });
-
-  var contenidoStyle = wb.createStyle({
-    font: {
-      name: "Arial",
-      color: "#494949",
-      size: 11,
-    },
-  });
-
-  //Nombres de las columnas
-  ws.cell(1, 1).string("id").style(style);  
-  ws.cell(1, 2).string("product_name").style(style);    
-  ws.cell(1, 3).string("price").style(style); 
-  ws.cell(1, 4).string("cantidad").style(style); 
-  ws.cell(1, 5).string("tipo").style(style); 
-  ws.cell(1, 6).string("proveedor").style(style); 
-
-  //ruta del archivo
-  const pathExcel = path.join(__dirname, '../excel',nombreArchivo + '.xlsx');
-
-  //Escribir o guardar
-  wb.write(pathExcel, function(err, stats){
-    if(err) console.log(err);
-  });
-
-}
 
 module.exports = {
   obtenerTodosLosProductos,
